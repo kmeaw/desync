@@ -4,9 +4,17 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
 	"os"
 	"os/signal"
 	"syscall"
+)
+
+// Define writers for STDOUT and STDERR that are used in the commands.
+// This allows tests to override them and write to buffers instead.
+var (
+	stdout io.Writer = os.Stdout
+	stderr io.Writer = os.Stderr
 )
 
 func main() {

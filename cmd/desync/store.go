@@ -139,8 +139,8 @@ func readCaibxFile(location string, cmdOpt cmdStoreOptions) (c desync.Index, err
 		return c, err
 	}
 	defer is.Close()
-
-	return is.GetIndex(indexName)
+	idx, err := is.GetIndex(indexName)
+	return idx, errors.Wrap(err, location)
 }
 
 func storeCaibxFile(idx desync.Index, location string, cmdOpt cmdStoreOptions) error {

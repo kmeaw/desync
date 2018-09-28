@@ -56,10 +56,13 @@ func runInfo(ctx context.Context, opt infoOptions, args []string) error {
 	}
 
 	var results struct {
-		Total   int    `json:"total"`
-		Unique  int    `json:"unique"`
-		InStore uint64 `json:"in-store"`
-		Size    uint64 `json:"size"`
+		Total        int    `json:"total"`
+		Unique       int    `json:"unique"`
+		InStore      uint64 `json:"in-store"`
+		Size         uint64 `json:"size"`
+		ChunkSizeMin uint64 `json:"chunk-size-min"`
+		ChunkSizeAvg uint64 `json:"chunk-size-avg"`
+		ChunkSizeMax uint64 `json:"chunk-size-max"`
 	}
 
 	// Calculate the size of the blob, from the last chunk
@@ -67,6 +70,11 @@ func runInfo(ctx context.Context, opt infoOptions, args []string) error {
 		last := c.Chunks[len(c.Chunks)-1]
 		results.Size = last.Start + last.Size
 	}
+
+	// Capture min:avg:max from the index
+	results.ChunkSizeMin = c.Index.ChunkSizeMin
+	results.ChunkSizeAvg = c.Index.ChunkSizeAvg
+	results.ChunkSizeMax = c.Index.ChunkSizeMax
 
 	// Go through each chunk to count and de-dup them with a map
 	deduped := make(map[desync.ChunkID]struct{})
@@ -118,6 +126,9 @@ func runInfo(ctx context.Context, opt infoOptions, args []string) error {
 		fmt.Println("Total chunks:", results.Total)
 		fmt.Println("Unique chunks:", results.Unique)
 		fmt.Println("Chunks in store:", results.InStore)
+		fmt.Println("Chunk size min:", results.ChunkSizeMin)
+		fmt.Println("Chunk size avg:", results.ChunkSizeAvg)
+		fmt.Println("Chunk size max:", results.ChunkSizeMax)
 	default:
 		return fmt.Errorf("unsupported output format '%s", opt.printFormat)
 	}

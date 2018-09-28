@@ -46,6 +46,9 @@ func runChop(ctx context.Context, opt chopOptions, args []string) error {
 	if (opt.clientKey == "") != (opt.clientCert == "") {
 		return errors.New("--client-key and --client-cert options need to be provided together")
 	}
+	if opt.store == "" {
+		return errors.New("no target store provided")
+	}
 
 	indexFile := args[0]
 	dataFile := args[1]

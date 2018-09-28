@@ -33,7 +33,7 @@ This is inherently slower than extract as while multiple chunks can be
 retrieved concurrently, writing to stdout cannot be parallelized.
 
 Use '-' to read the index from STDIN.`,
-		Example: `  desync cat -s http://192.168.1.1/ -c /path/to/cache file.caibx | grep something`,
+		Example: `  desync cat -s http://192.168.1.1/ file.caibx | grep something`,
 		Args:    cobra.RangeArgs(1, 2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			return runCat(ctx, opt, args)
@@ -68,7 +68,7 @@ func runCat(ctx context.Context, opt catOptions, args []string) error {
 			return err
 		}
 	} else {
-		outFile = os.Stdout
+		outFile = stdout
 	}
 
 	inFile := args[0]

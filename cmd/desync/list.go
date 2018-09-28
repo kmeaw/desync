@@ -47,7 +47,7 @@ func runList(ctx context.Context, opt listOptions, args []string) error {
 	}
 	// Write the list of chunk IDs to STDOUT
 	for _, chunk := range c.Chunks {
-		fmt.Println(chunk.ID)
+		fmt.Fprintln(stdout, chunk.ID)
 		// See if we're meant to stop
 		select {
 		case <-ctx.Done():

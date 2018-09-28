@@ -16,7 +16,7 @@ func NewProgressBar(prefix string) desync.ProgressBar {
 	}
 	bar := pb.New(0).Prefix(prefix)
 	bar.ShowCounters = false
-	bar.Output = os.Stderr
+	bar.Output = stderr
 	return ProgressBar{bar}
 }
 
