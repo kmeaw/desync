@@ -8,7 +8,7 @@ import (
 	"path"
 	"path/filepath"
 
-	"github.com/folbricht/desync"
+	"github.com/kmeaw/desync"
 	"github.com/minio/minio-go"
 	"github.com/pkg/errors"
 )

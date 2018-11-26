@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/folbricht/desync"
+	"github.com/kmeaw/desync"
 	"github.com/folbricht/tempfile"
 	"github.com/spf13/cobra"
 )

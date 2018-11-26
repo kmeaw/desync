@@ -7,7 +7,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/folbricht/desync"
+	"github.com/kmeaw/desync"
 	"github.com/spf13/cobra"
 )
 

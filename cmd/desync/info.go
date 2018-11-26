@@ -7,7 +7,7 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/folbricht/desync"
+	"github.com/kmeaw/desync"
 	"github.com/spf13/cobra"
 )
 

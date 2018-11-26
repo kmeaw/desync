@@ -1,6 +1,6 @@
 package main
 
-import "github.com/folbricht/desync"
+import "github.com/kmeaw/desync"
 
 // cmdStoreOptions are used to pass additional options to store initalization from the
 // commandline. These generally override settings from the config file.

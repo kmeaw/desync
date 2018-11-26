@@ -1,4 +1,4 @@
-module github.com/folbricht/desync
+module github.com/kmeaw/desync
 
 require (
 	github.com/datadog/zstd v1.3.5-0.20180806225715-e46e47635dc0

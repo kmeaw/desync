@@ -5,7 +5,7 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/folbricht/desync"
+	"github.com/kmeaw/desync"
 	"github.com/spf13/cobra"
 )
 

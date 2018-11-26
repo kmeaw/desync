@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 
-	"github.com/folbricht/desync"
+	"github.com/kmeaw/desync"
 	"github.com/spf13/cobra"
 )
 
