@@ -7,6 +7,7 @@ import (
 	"errors"
 	"io"
 	"os"
+	"path/filepath"
 
 	"github.com/kmeaw/desync"
 	"github.com/spf13/cobra"
@@ -46,6 +47,7 @@ index from STDIN.`,
 	flags.BoolVarP(&opt.readIndex, "index", "i", false, "read index file (caidx), not catar")
 	flags.BoolVar(&opt.NoSameOwner, "no-same-owner", false, "extract files as current user")
 	flags.BoolVar(&opt.NoSamePermissions, "no-same-permissions", false, "use current user's umask instead of what is in the archive")
+	flags.StringVar(&opt.Filter, "filter", "", "include only files matching the pattern")
 	return cmd
 }
 
@@ -55,6 +57,13 @@ func runUntar(ctx context.Context, opt untarOptions, args []string) error {
 	}
 	if opt.readIndex && len(opt.stores) == 0 {
 		return errors.New("-i requires at least one store (-s <location>)")
+	}
+
+	if opt.Filter != "" {
+		_, err := filepath.Match(opt.Filter, "")
+		if err != nil {
+			return err
+		}
 	}
 
 	input := args[0]

@@ -7,6 +7,7 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -22,6 +23,7 @@ import (
 type UntarOptions struct {
 	NoSameOwner       bool
 	NoSamePermissions bool
+	Filter            string
 }
 
 // UnTar implements the untar command, decoding a catar file and writing the
@@ -40,14 +42,43 @@ loop:
 		if err != nil {
 			return err
 		}
+
 		switch n := c.(type) {
 		case NodeDirectory:
+			if opts.Filter != "" {
+				ok, _ := filepath.Match(opts.Filter, n.Name)
+				if !ok {
+					continue
+				}
+			}
 			err = makeDir(dst, n, opts)
 		case NodeFile:
+			if opts.Filter != "" {
+				ok, _ := filepath.Match(opts.Filter, n.Name)
+				if !ok {
+                                  io.Copy(ioutil.Discard, n.Data)
+					continue
+				}
+			}
 			err = makeFile(dst, n, opts)
+			if opts.Filter != "" {
+                                return Interrupted{}
+                        }
 		case NodeDevice:
+			if opts.Filter != "" {
+				ok, _ := filepath.Match(opts.Filter, n.Name)
+				if !ok {
+					continue
+				}
+			}
 			err = makeDevice(dst, n, opts)
 		case NodeSymlink:
+			if opts.Filter != "" {
+				ok, _ := filepath.Match(opts.Filter, n.Name)
+				if !ok {
+					continue
+				}
+			}
 			err = makeSymlink(dst, n, opts)
 		case nil:
 			break loop
